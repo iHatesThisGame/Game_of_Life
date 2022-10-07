@@ -274,5 +274,12 @@ namespace Game_of_Life
             }
             graphicsPanel1.Invalidate();
         }
+
+        private void livingCellColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            cellColor = Color.Orange;
+
+            graphicsPanel1.Invalidate();
+        }
     }
 }
