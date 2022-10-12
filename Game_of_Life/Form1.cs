@@ -15,6 +15,8 @@ namespace Game_of_Life
         // The universe array
         bool[,] universe = new bool[30, 30];
 
+        bool toroidal = false;
+
         // Drawing colors
         Color gridColor = Color.Black;
         Color cellColor = Color.Gray;
@@ -40,6 +42,8 @@ namespace Game_of_Life
         {
             bool[,] scratchPad = new bool[30, 30];
 
+            if (toroidal == true)
+            {
                 for (int y = 0; y < universe.GetLength(1); y++)
                 {
                     for (int x = 0; x < universe.GetLength(0); x++)
@@ -70,7 +74,43 @@ namespace Game_of_Life
                             scratchPad[x, y] = true;
                         }
                     }
+                } 
+            }
+            else if (toroidal == false)
+            {
+                for (int y = 0; y < universe.GetLength(1); y++)
+                {
+                    for (int x = 0; x < universe.GetLength(0); x++)
+                    {
+                        int neighbors = CountNeighborsFinite(x, y);
+                        int count;
+
+                        if (universe[x, y] == true)
+                        {
+                            count = 1;
+                        }
+                        else
+                        {
+                            count = 0;
+                        }
+
+                        if (count == 1 && (neighbors < 2 || neighbors > 3))
+                        {
+                            scratchPad[x, y] = false;
+                        }
+                        else if (count == 1 && (neighbors == 2 || neighbors == 3))
+                        {
+                            scratchPad[x, y] = true;
+                        }
+
+                        else if (count == 0 && neighbors == 3)
+                        {
+                            scratchPad[x, y] = true;
+                        }
+                    }
                 }
+            }
+
 
             bool[,] temp = universe;
             universe = scratchPad;
@@ -232,11 +272,11 @@ namespace Game_of_Life
                     }
                     if (xCheck < 0)
                     {
-                        xLen = -1;
+                        xCheck = xLen -1;
                     }
                     if (yCheck < 0)
                     {
-                        yLen = -1;
+                        yCheck = yLen -1;
                     }
                     if (xCheck >= xLen)
                     {
@@ -284,6 +324,8 @@ namespace Game_of_Life
                 }
             }
             generations = 0;
+
+            timer.Enabled = false;
 
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
 
@@ -352,12 +394,12 @@ namespace Game_of_Life
 
         private void toroidalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            toroidal = true;
         }
 
         private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            toroidal = false;
         }
     }
 }
