@@ -40,37 +40,37 @@ namespace Game_of_Life
         {
             bool[,] scratchPad = new bool[30, 30];
 
-            for (int y = 0; y < universe.GetLength(1); y++)
-            {
-                for (int x = 0; x < universe.GetLength(0); x++)
+                for (int y = 0; y < universe.GetLength(1); y++)
                 {
-                    int neighbors = CountNeighborsFinite(x, y);
-                    int count;
+                    for (int x = 0; x < universe.GetLength(0); x++)
+                    {
+                        int neighbors = CountNeighborsToroidal(x, y);
+                        int count;
 
-                    if (universe[x, y] == true)
-                    {
-                        count = 1;
-                    }
-                    else
-                    {
-                        count = 0;
-                    }
+                        if (universe[x, y] == true)
+                        {
+                            count = 1;
+                        }
+                        else
+                        {
+                            count = 0;
+                        }
 
-                    if (count == 1 && (neighbors < 2 || neighbors > 3))
-                    {
-                        scratchPad[x, y] = false;
-                    }
-                    else if (count == 1 && (neighbors == 2 || neighbors == 3))
-                    {
-                        scratchPad[x, y] = true;
-                    }
+                        if (count == 1 && (neighbors < 2 || neighbors > 3))
+                        {
+                            scratchPad[x, y] = false;
+                        }
+                        else if (count == 1 && (neighbors == 2 || neighbors == 3))
+                        {
+                            scratchPad[x, y] = true;
+                        }
 
-                    else if (count == 0 && neighbors == 3)
-                    {
-                        scratchPad[x, y] = true;
+                        else if (count == 0 && neighbors == 3)
+                        {
+                            scratchPad[x, y] = true;
+                        }
                     }
                 }
-            }
 
             bool[,] temp = universe;
             universe = scratchPad;
@@ -214,6 +214,48 @@ namespace Game_of_Life
             return count;
         }
 
+        private int CountNeighborsToroidal(int x, int y)
+        {
+            int count = 0;
+            int xLen = universe.GetLength(0);
+            int yLen = universe.GetLength(1);
+            for (int yOffset = -1; yOffset <= 1; yOffset++)
+            {
+                for (int xOffset = -1; xOffset <= 1; xOffset++)
+                {
+                    int xCheck = x + xOffset;
+                    int yCheck = y + yOffset;
+
+                    if (xOffset == 0 && yOffset == 0)
+                    {
+                        continue;
+                    }
+                    if (xCheck < 0)
+                    {
+                        xLen = -1;
+                    }
+                    if (yCheck < 0)
+                    {
+                        yLen = -1;
+                    }
+                    if (xCheck >= xLen)
+                    {
+                        xCheck = 0;
+                    }
+                    if (yCheck >= yLen)
+                    {
+                        yCheck = 0;
+                    }
+
+                    if (universe[xCheck, yCheck] == true)
+                    {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
+
         private void PlayButton_Click(object sender, EventArgs e)
         {
             timer.Enabled = true;
@@ -232,7 +274,7 @@ namespace Game_of_Life
             graphicsPanel1.Invalidate();
         }
 
-        private void newToolStripButton_Click(object sender, EventArgs e)
+        private void newToolStripButton_Click(object sender, EventArgs e)                           // terrible variable name. this is "New" option in the menu
         {
             for (int y = 0; y < universe.GetLength(1); y++)
             {
@@ -275,11 +317,47 @@ namespace Game_of_Life
             graphicsPanel1.Invalidate();
         }
 
-        private void livingCellColorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void backgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            cellColor = Color.Orange;
+            ColorDialog dialog = new ColorDialog();
+            dialog.Color = graphicsPanel1.BackColor;
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+                graphicsPanel1.BackColor = dialog.Color;
+                graphicsPanel1.Invalidate();
+            }
+        }
 
-            graphicsPanel1.Invalidate();
+        private void cellColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog dialog = new ColorDialog();
+            dialog.Color = cellColor;
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+                cellColor = dialog.Color;
+                graphicsPanel1.Invalidate();
+            }
+        }
+
+        private void gridColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog dialog = new ColorDialog();
+            dialog.Color = gridColor;
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+                gridColor = dialog.Color;
+                graphicsPanel1.Invalidate();
+            }
+        }
+
+        private void toroidalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
