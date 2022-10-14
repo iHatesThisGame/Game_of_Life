@@ -27,7 +27,8 @@ namespace Game_of_Life
         // Generation count
         int generations = 0;
 
-        public Form1()
+
+public Form1()
         {
             InitializeComponent();
 
@@ -41,6 +42,17 @@ namespace Game_of_Life
         private void NextGeneration()
         {
             bool[,] scratchPad = new bool[30, 30];
+
+            //string toroidalCheck = "";
+
+            //if (toroidal == true)
+            //{
+            //    toroidalCheck = "Toroidal mode";
+            //}
+            //else if (toroidal == false)
+            //{
+            //    toroidalCheck = "Finite mode";
+            //}
 
             if (toroidal == true)
             {
@@ -128,7 +140,7 @@ namespace Game_of_Life
             generations++;
 
             // Update status strip generations
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString()/* + " " + toroidalCheck*/;
 
             graphicsPanel1.Invalidate();
         }
@@ -206,13 +218,14 @@ namespace Game_of_Life
         }
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Closes Game of Life
             this.Close();
         }
 
         private int CountNeighborsFinite(int x, int y)
         {
             int count = 0;
-            int xLen = universe.GetLength(0);
+            int xLen = universe.GetLength(0);                       // Length of universe from each direction, both x and y
             int yLen = universe.GetLength(1);
 
 
@@ -223,10 +236,13 @@ namespace Game_of_Life
                     int xCheck = x + xOffset;
                     int yCheck = y + yOffset;
 
-                    if (xOffset == 0 && yOffset == 0)
+                    if (xOffset == 0 && yOffset == 0)               // If at cell we're checking, move to next step
                     {
                         continue;
                     }
+
+                    // If at cell above, below, continue to next step
+
                     if (xCheck < 0)
                     {
                         continue;
@@ -244,6 +260,8 @@ namespace Game_of_Life
                         continue;
                     }
 
+                    // If cells are active, increase counter for neighbor
+
                     if (universe[xCheck, yCheck] == true)
                     {
                         count++;
@@ -258,9 +276,9 @@ namespace Game_of_Life
         {
             int count = 0;
             int xLen = universe.GetLength(0);
-            int yLen = universe.GetLength(1);
-            for (int yOffset = -1; yOffset <= 1; yOffset++)
-            {
+            int yLen = universe.GetLength(1);                                               // Follows same format as above however resets to other side of screen
+            for (int yOffset = -1; yOffset <= 1; yOffset++)                                 // if at edge instead of calling everything off screen dead
+            {                                                                               
                 for (int xOffset = -1; xOffset <= 1; xOffset++)
                 {
                     int xCheck = x + xOffset;
@@ -298,18 +316,21 @@ namespace Game_of_Life
 
         private void PlayButton_Click(object sender, EventArgs e)
         {
+            // pressing play enables the timer
             timer.Enabled = true;
             graphicsPanel1.Invalidate();
         }
 
         private void PauseButton_Click(object sender, EventArgs e)
         {
+            // pressing pause disables the timer or restarts (depending on current state of timer)
             timer.Enabled = !timer.Enabled;
             graphicsPanel1.Invalidate();
         }
 
         private void NextButton_Click(object sender, EventArgs e)
         {
+            // proceeds to next generation
             NextGeneration();
             graphicsPanel1.Invalidate();
         }
@@ -320,6 +341,7 @@ namespace Game_of_Life
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
+                    // clears each spot in the array, one spot at a time
                     universe[x, y] = false;
                 }
             }
@@ -327,7 +349,7 @@ namespace Game_of_Life
 
             timer.Enabled = false;
 
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString()/* + " " + toroidalCheck*/;
 
             graphicsPanel1.Invalidate();
         }
@@ -339,7 +361,7 @@ namespace Game_of_Life
             timer.Enabled = false;
             generations = 0;
 
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString()/* + " " + toroidalCheck*/;
 
             for (int y = 0; y < universe.GetLength(1); y++)
             {
