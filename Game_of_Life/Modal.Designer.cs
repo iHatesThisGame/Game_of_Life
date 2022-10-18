@@ -92,7 +92,7 @@ namespace Game_of_Life
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Modal";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Modal";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
