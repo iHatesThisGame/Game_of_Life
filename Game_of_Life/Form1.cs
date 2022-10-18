@@ -32,6 +32,11 @@ public Form1()
         {
             InitializeComponent();
 
+            // Set default colors
+            BackColor = Properties.Settings.Default.PanelColor; // background color
+            cellColor = Properties.Settings.Default.CellColor;  // cell color
+            gridColor = Properties.Settings.Default.GridColor;  // grid color
+
             // Setup the timer
             timer.Interval = 100; // milliseconds
             timer.Tick += Timer_Tick;
@@ -416,12 +421,21 @@ public Form1()
 
         private void toroidalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            toroidal = true;
+            toroidal = true;        // set mode to toroidal
         }
 
         private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            toroidal = false;
+            toroidal = false;       // set mode to finite
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Properties.Settings.Default.PanelColor = graphicsPanel1.BackColor;  // updates background color on exit
+            Properties.Settings.Default.CellColor = cellColor;                  // updates cell color on exit
+            Properties.Settings.Default.GridColor = gridColor;                  // updates grid color on exit
+
+            Properties.Settings.Default.Save();
         }
     }
 }
