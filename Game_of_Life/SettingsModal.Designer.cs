@@ -31,15 +31,15 @@ namespace Game_of_Life
         {
             this.buttonOk = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownTimer = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownRows = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownColumns = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRows)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownColumns)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonOk
@@ -62,31 +62,31 @@ namespace Game_of_Life
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
-            // numericUpDown1
+            // numericUpDownTimer
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(97, 16);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.numericUpDownTimer.Location = new System.Drawing.Point(97, 16);
+            this.numericUpDownTimer.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.TabIndex = 2;
+            this.numericUpDownTimer.Name = "numericUpDownTimer";
+            this.numericUpDownTimer.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownTimer.TabIndex = 2;
             // 
-            // numericUpDown2
+            // numericUpDownRows
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(97, 43);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown2.TabIndex = 3;
+            this.numericUpDownRows.Location = new System.Drawing.Point(97, 43);
+            this.numericUpDownRows.Name = "numericUpDownRows";
+            this.numericUpDownRows.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownRows.TabIndex = 3;
             // 
-            // numericUpDown3
+            // numericUpDownColumns
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(97, 70);
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown3.TabIndex = 4;
+            this.numericUpDownColumns.Location = new System.Drawing.Point(97, 70);
+            this.numericUpDownColumns.Name = "numericUpDownColumns";
+            this.numericUpDownColumns.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownColumns.TabIndex = 4;
             // 
             // label1
             // 
@@ -125,19 +125,20 @@ namespace Game_of_Life
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.numericUpDown3);
-            this.Controls.Add(this.numericUpDown2);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.numericUpDownColumns);
+            this.Controls.Add(this.numericUpDownRows);
+            this.Controls.Add(this.numericUpDownTimer);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOk);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsModal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRows)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownColumns)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,9 +148,9 @@ namespace Game_of_Life
 
         private System.Windows.Forms.Button buttonOk;
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.NumericUpDown numericUpDownTimer;
+        private System.Windows.Forms.NumericUpDown numericUpDownRows;
+        private System.Windows.Forms.NumericUpDown numericUpDownColumns;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;

@@ -78,6 +78,7 @@ namespace Game_of_Life
             this.randomSeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sizeAndTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -168,7 +169,8 @@ namespace Game_of_Life
             this.customizeToolStripMenuItem,
             this.modeToolStripMenuItem,
             this.toolStripSeparator2,
-            this.resetToolStripMenuItem});
+            this.resetToolStripMenuItem,
+            this.sizeAndTimeToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.toolsToolStripMenuItem.Text = "&Settings";
@@ -472,6 +474,13 @@ namespace Game_of_Life
             this.resetToolStripMenuItem.Text = "&Reset";
             this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
+            // sizeAndTimeToolStripMenuItem
+            // 
+            this.sizeAndTimeToolStripMenuItem.Name = "sizeAndTimeToolStripMenuItem";
+            this.sizeAndTimeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sizeAndTimeToolStripMenuItem.Text = "&Size and Time";
+            this.sizeAndTimeToolStripMenuItem.Click += new System.EventHandler(this.sizeAndTimeToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -546,6 +555,7 @@ namespace Game_of_Life
         private System.Windows.Forms.ToolStripMenuItem randomSeedToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sizeAndTimeToolStripMenuItem;
     }
 }
 

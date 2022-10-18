@@ -27,6 +27,9 @@ namespace Game_of_Life
         // Generation count
         int generations = 0;
 
+        // Height / Width
+        int columns = 30;
+        int rows = 30;
 
 public Form1()
         {
@@ -36,6 +39,12 @@ public Form1()
             BackColor = Properties.Settings.Default.PanelColor; // background color
             cellColor = Properties.Settings.Default.CellColor;  // cell color
             gridColor = Properties.Settings.Default.GridColor;  // grid color
+            timer.Interval = Properties.Settings.Default.TimerInterval; // timer interval
+            columns = Properties.Settings.Default.Columns;
+            rows = Properties.Settings.Default.Rows;
+
+            universe = new bool[columns,rows];
+
 
             // Setup the timer
             timer.Interval = 100; // milliseconds
@@ -46,7 +55,7 @@ public Form1()
         // Calculate the next generation of cells
         private void NextGeneration()
         {
-            bool[,] scratchPad = new bool[30, 30];
+            bool[,] scratchPad = new bool[columns, rows];
 
             //string toroidalCheck = "";
 
@@ -386,6 +395,40 @@ public Form1()
             graphicsPanel1.Invalidate();
         }
 
+        private void newSeedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewSeedModal dialog = new NewSeedModal();
+            int seed = 0;
+            dialog.SetSeed(seed);
+
+            Random rng = new Random(seed);
+
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+                timer.Enabled = false;
+                generations = 0;
+
+                toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString()/* + " " + toroidalCheck*/;
+
+                for (int y = 0; y < universe.GetLength(1); y++)
+                {
+                    for (int x = 0; x < universe.GetLength(0); x++)
+                    {
+                        universe[x, y] = false;
+                    }
+                }
+
+                for (int y = 0; y < universe.GetLength(1); y++)
+                {
+                    for (int x = 0; x < universe.GetLength(0); x++)
+                    {
+                        universe[x, y] = rng.Next(2) == 1;
+                    }
+                }
+                graphicsPanel1.Invalidate();
+            }
+        }
+
         private void backgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorDialog dialog = new ColorDialog();
@@ -434,6 +477,9 @@ public Form1()
             Properties.Settings.Default.PanelColor = graphicsPanel1.BackColor;  // updates background color on exit
             Properties.Settings.Default.CellColor = cellColor;                  // updates cell color on exit
             Properties.Settings.Default.GridColor = gridColor;                  // updates grid color on exit
+            Properties.Settings.Default.TimerInterval = timer.Interval;
+            Properties.Settings.Default.Rows = rows;
+            Properties.Settings.Default.Columns = columns;
 
             Properties.Settings.Default.Save();
         }
@@ -447,38 +493,15 @@ public Form1()
             gridColor = Properties.Settings.Default.GridColor;  // grid color
         }
 
-        private void newSeedToolStripMenuItem_Click(object sender, EventArgs e)
+        private void sizeAndTimeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NewSeedModal dialog = new NewSeedModal();
-            int seed = 0;
-            dialog.SetSeed(seed);
+            SettingsModal dialog = new SettingsModal();
 
-            Random rng = new Random(seed);
+            dialog.SetTimerInterval(timer.Interval);
+            dialog.SetRows(rows);
+            dialog.SetColums(columns);
 
-            if (DialogResult.OK == dialog.ShowDialog())
-            {
-                timer.Enabled = false;
-                generations = 0;
-
-                toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString()/* + " " + toroidalCheck*/;
-
-                for (int y = 0; y < universe.GetLength(1); y++)
-                {
-                    for (int x = 0; x < universe.GetLength(0); x++)
-                    {
-                        universe[x, y] = false;
-                    }
-                }
-
-                for (int y = 0; y < universe.GetLength(1); y++)
-                {
-                    for (int x = 0; x < universe.GetLength(0); x++)
-                    {
-                        universe[x, y] = rng.Next(2) == 1;
-                    }
-                }
-                graphicsPanel1.Invalidate();
-            }
+            graphicsPanel1.Invalidate();
         }
     }
 }
