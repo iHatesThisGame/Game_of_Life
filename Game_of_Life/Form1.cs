@@ -449,7 +449,7 @@ public Form1()
 
         private void newSeedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Modal dialog = new Modal();
+            NewSeedModal dialog = new NewSeedModal();
             int seed = 0;
             dialog.SetSeed(seed);
 

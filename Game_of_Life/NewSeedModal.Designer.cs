@@ -1,7 +1,7 @@
 ﻿
 namespace Game_of_Life
 {
-    partial class Modal
+    partial class NewSeedModal
     {
         /// <summary>
         /// Required designer variable.
@@ -77,7 +77,7 @@ namespace Game_of_Life
             this.label1.TabIndex = 3;
             this.label1.Text = "Enter Seed Number";
             // 
-            // Modal
+            // NewSeedModal
             // 
             this.AcceptButton = this.buttonOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -91,9 +91,9 @@ namespace Game_of_Life
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Modal";
+            this.Name = "NewSeedModal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Modal";
+            this.Text = "New Seed";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

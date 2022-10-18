@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Game_of_Life
 {
-    public partial class Modal : Form
+    public partial class NewSeedModal : Form
     {
-        public Modal()
+        public NewSeedModal()
         {
             InitializeComponent();
         }

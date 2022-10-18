@@ -55,19 +55,25 @@
     <Compile Include="GraphicsPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Modal.cs">
+    <Compile Include="NewSeedModal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modal.Designer.cs">
-      <DependentUpon>Modal.cs</DependentUpon>
+    <Compile Include="NewSeedModal.Designer.cs">
+      <DependentUpon>NewSeedModal.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsModal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsModal.Designer.cs">
+      <DependentUpon>SettingsModal.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modal.resx">
-      <DependentUpon>Modal.cs</DependentUpon>
+    <EmbeddedResource Include="NewSeedModal.resx">
+      <DependentUpon>NewSeedModal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -78,6 +84,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SettingsModal.resx">
+      <DependentUpon>SettingsModal.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
