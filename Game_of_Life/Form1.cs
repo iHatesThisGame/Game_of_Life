@@ -23,6 +23,7 @@ namespace Game_of_Life
 
         // The Timer class
         Timer timer = new Timer();
+        int timerInterval = 100;
 
         // Generation count
         int generations = 0;
@@ -39,7 +40,7 @@ public Form1()
             BackColor = Properties.Settings.Default.PanelColor; // background color
             cellColor = Properties.Settings.Default.CellColor;  // cell color
             gridColor = Properties.Settings.Default.GridColor;  // grid color
-            timer.Interval = Properties.Settings.Default.TimerInterval; // timer interval
+            timerInterval = Properties.Settings.Default.TimerInterval; // timer interval
             columns = Properties.Settings.Default.Columns;
             rows = Properties.Settings.Default.Rows;
 
@@ -47,7 +48,7 @@ public Form1()
 
 
             // Setup the timer
-            timer.Interval = 100; // milliseconds
+            timer.Interval = timerInterval; // milliseconds
             timer.Tick += Timer_Tick;
             timer.Enabled = false; // start timer running
         }
@@ -477,7 +478,7 @@ public Form1()
             Properties.Settings.Default.PanelColor = graphicsPanel1.BackColor;  // updates background color on exit
             Properties.Settings.Default.CellColor = cellColor;                  // updates cell color on exit
             Properties.Settings.Default.GridColor = gridColor;                  // updates grid color on exit
-            Properties.Settings.Default.TimerInterval = timer.Interval;
+            Properties.Settings.Default.TimerInterval = timerInterval;
             Properties.Settings.Default.Rows = rows;
             Properties.Settings.Default.Columns = columns;
 
@@ -501,6 +502,9 @@ public Form1()
             dialog.SetRows(rows);
             dialog.SetColums(columns);
 
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+            }
             graphicsPanel1.Invalidate();
         }
     }
