@@ -437,5 +437,24 @@ public Form1()
 
             Properties.Settings.Default.Save();
         }
+
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Reset();
+
+            BackColor = Properties.Settings.Default.PanelColor; // background color
+            cellColor = Properties.Settings.Default.CellColor;  // cell color
+            gridColor = Properties.Settings.Default.GridColor;  // grid color
+        }
+
+        private void newSeedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Modal dialog = new Modal();
+
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+
+            }
+        }
     }
 }

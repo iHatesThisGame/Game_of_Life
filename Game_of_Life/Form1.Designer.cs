@@ -76,6 +76,8 @@ namespace Game_of_Life
             this.seedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newSeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.randomSeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -164,7 +166,9 @@ namespace Game_of_Life
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.customizeToolStripMenuItem,
-            this.modeToolStripMenuItem});
+            this.modeToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.resetToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.toolsToolStripMenuItem.Text = "&Settings";
@@ -447,6 +451,7 @@ namespace Game_of_Life
             this.newSeedToolStripMenuItem.Name = "newSeedToolStripMenuItem";
             this.newSeedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newSeedToolStripMenuItem.Text = "&New Seed";
+            this.newSeedToolStripMenuItem.Click += new System.EventHandler(this.newSeedToolStripMenuItem_Click);
             // 
             // randomSeedToolStripMenuItem
             // 
@@ -454,6 +459,18 @@ namespace Game_of_Life
             this.randomSeedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.randomSeedToolStripMenuItem.Text = "&Random Seed";
             this.randomSeedToolStripMenuItem.Click += new System.EventHandler(this.newRandomSeedToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            // 
+            // resetToolStripMenuItem
+            // 
+            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.resetToolStripMenuItem.Text = "&Reset";
+            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -527,6 +544,8 @@ namespace Game_of_Life
         private System.Windows.Forms.ToolStripMenuItem seedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newSeedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem randomSeedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
     }
 }
 
