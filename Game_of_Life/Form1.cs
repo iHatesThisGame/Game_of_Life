@@ -450,10 +450,34 @@ public Form1()
         private void newSeedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Modal dialog = new Modal();
+            int seed = 0;
+            dialog.SetSeed(seed);
+
+            Random rng = new Random(seed);
 
             if (DialogResult.OK == dialog.ShowDialog())
             {
+                timer.Enabled = false;
+                generations = 0;
 
+                toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString()/* + " " + toroidalCheck*/;
+
+                for (int y = 0; y < universe.GetLength(1); y++)
+                {
+                    for (int x = 0; x < universe.GetLength(0); x++)
+                    {
+                        universe[x, y] = false;
+                    }
+                }
+
+                for (int y = 0; y < universe.GetLength(1); y++)
+                {
+                    for (int x = 0; x < universe.GetLength(0); x++)
+                    {
+                        universe[x, y] = rng.Next(2) == 1;
+                    }
+                }
+                graphicsPanel1.Invalidate();
             }
         }
     }
