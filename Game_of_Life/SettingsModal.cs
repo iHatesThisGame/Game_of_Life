@@ -17,6 +17,24 @@ namespace Game_of_Life
             InitializeComponent();
         }
 
+        public int Timer
+        {
+            get { return (int)numericUpDownTimer.Value; }
+            set { numericUpDownTimer.Value = value; }
+        }
+
+        public int Rows
+        {
+            get { return (int)numericUpDownTimer.Value; }
+            set { numericUpDownTimer.Value = value; }
+        }
+
+        public int Columns
+        {
+            get { return (int)numericUpDownColumns.Value; }
+            set { numericUpDownColumns.Value = value; }
+        }
+
         public int GetTimerInterval()
         {
             return (int)numericUpDownTimer.Value;

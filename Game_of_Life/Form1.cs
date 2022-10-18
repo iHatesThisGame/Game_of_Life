@@ -498,14 +498,18 @@ public Form1()
         {
             SettingsModal dialog = new SettingsModal();
 
-            dialog.SetTimerInterval(timer.Interval);
+            dialog.SetTimerInterval(timerInterval);
             dialog.SetRows(rows);
             dialog.SetColums(columns);
 
             if (DialogResult.OK == dialog.ShowDialog())
             {
+                timerInterval = dialog.GetTimerInterval();
+                rows = dialog.GetRows();
+                columns = dialog.GetColumns();
+
+                graphicsPanel1.Invalidate();
             }
-            graphicsPanel1.Invalidate();
         }
     }
 }
