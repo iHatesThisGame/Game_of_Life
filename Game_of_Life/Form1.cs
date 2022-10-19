@@ -22,6 +22,7 @@ namespace Game_of_Life
         // Drawing colors
         Color gridColor = Color.Black;
         Color cellColor = Color.Gray;
+        Color hudColor = Color.Red;
 
         // The Timer class
         Timer timer = new Timer();
@@ -29,10 +30,10 @@ namespace Game_of_Life
 
         // Generation count
         int generations = 0;
-
+        // Set height and width
         int rows = 0;
         int columns = 0;
-
+        // String to be updated for tool strip, will have mode and int for number of living cells
         string toroidalCheck = "";
         string displayLivingCells = "";
         
@@ -41,13 +42,13 @@ namespace Game_of_Life
         {
             InitializeComponent();
 
-            // Set default colors
+            // Set default settings
             BackColor = Properties.Settings.Default.PanelColor; // background color
             cellColor = Properties.Settings.Default.CellColor;  // cell color
             gridColor = Properties.Settings.Default.GridColor;  // grid color
             timer.Interval = Properties.Settings.Default.TimerInterval; // timer interval
-            columns = Properties.Settings.Default.Columns;
-            rows = Properties.Settings.Default.Rows;
+            columns = Properties.Settings.Default.Columns;      // width
+            rows = Properties.Settings.Default.Rows;            // height
 
 
             // Setup the timer
@@ -59,8 +60,6 @@ namespace Game_of_Life
         // Calculate the next generation of cells
         private void NextGeneration()
         {
-            
-
             displayLivingCells = livingCells().ToString();
 
             if (toroidal == true)
@@ -158,7 +157,7 @@ namespace Game_of_Life
             generations++;
 
             // Update status strip generations
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString() + " Number of Living Cells: " + displayLivingCells + " " + toroidalCheck;
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString() + "Number of Living Cells: " + displayLivingCells + " " + toroidalCheck;
 
             graphicsPanel1.Invalidate();
         }
@@ -180,6 +179,11 @@ namespace Game_of_Life
             // A Pen for drawing the grid lines (color, width)
             Pen gridPen = new Pen(gridColor, 1);
 
+            // A Pen for drawing the HUD
+            Brush hudBrush = new SolidBrush(hudColor);
+
+            // Painting HUD
+
             // A Brush for filling living cells interiors (color)
             Brush cellBrush = new SolidBrush(cellColor);
 
@@ -194,12 +198,13 @@ namespace Game_of_Life
                     cellRect.X = x * cellWidth;
                     cellRect.Y = y * cellHeight;
                     cellRect.Width = cellWidth;
-                    cellRect.Height = cellHeight; 
-
+                    cellRect.Height = cellHeight;
+                    
+                    // Formatting for number of neighbors display
                     StringFormat format = new StringFormat();
                     format.Alignment = StringAlignment.Center;
                     format.LineAlignment = StringAlignment.Center;
-                    int numSize = cellHeight / 3;
+                    int numSize = cellHeight / 2;
                     if (numSize < 1)
                     {
                         numSize = 1;
@@ -287,6 +292,11 @@ namespace Game_of_Life
             }
         }
 
+        public void HUD()
+        {
+
+        }
+
         public int livingCells()
         {
             int numLivingCells = 0;
@@ -301,7 +311,6 @@ namespace Game_of_Life
                     }
                 }
             }
-
             return numLivingCells;
         }
 
@@ -526,11 +535,15 @@ namespace Game_of_Life
         private void toroidalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             toroidal = true;        // set mode to toroidal
+            finiteToolStripMenuItem.Checked = false;
+            toroidalToolStripMenuItem.Checked = true;
         }
 
         private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             toroidal = false;       // set mode to finite
+            toroidalToolStripMenuItem.Checked = false;
+            finiteToolStripMenuItem.Checked = true;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -552,9 +565,9 @@ namespace Game_of_Life
             BackColor = Properties.Settings.Default.PanelColor; // background color
             cellColor = Properties.Settings.Default.CellColor;  // cell color
             gridColor = Properties.Settings.Default.GridColor;  // grid color
-            rows = Properties.Settings.Default.Rows;
-            columns = Properties.Settings.Default.Columns;
-            timer.Interval = Properties.Settings.Default.TimerInterval;
+            rows = Properties.Settings.Default.Rows;            // height
+            columns = Properties.Settings.Default.Columns;      // width
+            timer.Interval = Properties.Settings.Default.TimerInterval; // timer speed
         }
 
         private void sizeAndTimeToolStripMenuItem_Click(object sender, EventArgs e)
