@@ -243,7 +243,6 @@ namespace Game_of_Life
                             if (showNums == true)
                             {
                                 e.Graphics.DrawString(neighborCountToroidal.ToString(), font, Brushes.White, cellRect, format);
-                                graphicsPanel1.Invalidate();
                             }
                         }
                         else
@@ -251,7 +250,6 @@ namespace Game_of_Life
                             if (showNums == true)
                             {
                                 e.Graphics.DrawString(neighborCountToroidal.ToString(), font, Brushes.White, cellRect, format);
-                                graphicsPanel1.Invalidate();
                             }
                         }
                     }
@@ -260,7 +258,6 @@ namespace Game_of_Life
                     if (showGrid == true)
                     {
                         e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
-                        graphicsPanel1.Invalidate();
                     }
                 }
             }
@@ -315,7 +312,7 @@ namespace Game_of_Life
             return numLivingCells;
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void exit_Click(object sender, EventArgs e)
         {
             // Closes Game of Life
             this.Close();
@@ -434,7 +431,7 @@ namespace Game_of_Life
             graphicsPanel1.Invalidate();
         }
 
-        private void newToolStripButton_Click(object sender, EventArgs e)                           // terrible variable name. this is "New" option in the menu
+        private void newButton_Click(object sender, EventArgs e)                           // terrible variable name. this is "New" option in the menu
         {
             for (int y = 0; y < universe.GetLength(1); y++)
             {
@@ -453,7 +450,7 @@ namespace Game_of_Life
             graphicsPanel1.Invalidate();
         }
 
-        private void newRandomSeedToolStripMenuItem_Click(object sender, EventArgs e)
+        private void newRandomSeed_Click(object sender, EventArgs e)
         {
             Random rng = new Random();
 
@@ -473,7 +470,7 @@ namespace Game_of_Life
             graphicsPanel1.Invalidate();
         }
 
-        private void newSeedToolStripMenuItem_Click(object sender, EventArgs e)
+        private void newSeed_Click(object sender, EventArgs e)
         {
             NewSeedModal dialog = new NewSeedModal();
             int seed = 0;
@@ -500,7 +497,7 @@ namespace Game_of_Life
             }
         }
 
-        private void backgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void backgroundColor_Click(object sender, EventArgs e)
         {
             ColorDialog dialog = new ColorDialog();
             dialog.Color = graphicsPanel1.BackColor;
@@ -511,7 +508,7 @@ namespace Game_of_Life
             }
         }
 
-        private void cellColorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void cellColor_Click(object sender, EventArgs e)
         {
             ColorDialog dialog = new ColorDialog();
             dialog.Color = cellColor;
@@ -522,7 +519,7 @@ namespace Game_of_Life
             }
         }
 
-        private void gridColorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void gridColor_Click(object sender, EventArgs e)
         {
             ColorDialog dialog = new ColorDialog();
             dialog.Color = gridColor;
@@ -533,14 +530,14 @@ namespace Game_of_Life
             }
         }
 
-        private void toroidalToolStripMenuItem_Click(object sender, EventArgs e)
+        private void toroidal_Click(object sender, EventArgs e)
         {
             toroidal = true;        // set mode to toroidal
             finiteToolStripMenuItem.Checked = false;
             toroidalToolStripMenuItem.Checked = true;
         }
 
-        private void finiteToolStripMenuItem_Click(object sender, EventArgs e)
+        private void finite_Click(object sender, EventArgs e)
         {
             toroidal = false;       // set mode to finite
             toroidalToolStripMenuItem.Checked = false;
@@ -559,7 +556,7 @@ namespace Game_of_Life
             Properties.Settings.Default.Save();
         }
 
-        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        private void reset_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.Reset();
 
@@ -571,7 +568,7 @@ namespace Game_of_Life
             timer.Interval = Properties.Settings.Default.TimerInterval; // timer speed
         }
 
-        private void sizeAndTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void sizeAndTime_Click(object sender, EventArgs e)
         {
             SettingsModal dialog = new SettingsModal();
 
@@ -590,17 +587,17 @@ namespace Game_of_Life
             }
         }
 
-        private void showNeighborCountToolStripMenuItem_Click(object sender, EventArgs e)
+        private void showNeighborCount_Click(object sender, EventArgs e)
         {
             showNums = !showNums;
         }
 
-        private void gridOnOffToolStripMenuItem_Click(object sender, EventArgs e)
+        private void gridOnOff_Click(object sender, EventArgs e)
         {
             showGrid = !showGrid;
         }
 
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void saveAs_Click(object sender, EventArgs e)
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "All Files|.|txt|*.txt";
