@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,7 +37,7 @@ namespace Game_of_Life
         // String to be updated for tool strip, will have mode and int for number of living cells
         string toroidalCheck = "";
         string displayLivingCells = "";
-        
+
 
         public Form1()
         {
@@ -107,7 +108,7 @@ namespace Game_of_Life
                             scratchPad[x, y] = false;
                         }
                     }
-                } 
+                }
             }
             else if (toroidal == false)
             {
@@ -199,7 +200,7 @@ namespace Game_of_Life
                     cellRect.Y = y * cellHeight;
                     cellRect.Width = cellWidth;
                     cellRect.Height = cellHeight;
-                    
+
                     // Formatting for number of neighbors display
                     StringFormat format = new StringFormat();
                     format.Alignment = StringAlignment.Center;
@@ -231,7 +232,7 @@ namespace Game_of_Life
                             {
                                 e.Graphics.DrawString(neighborCountFinite.ToString(), font, Brushes.White, cellRect, format);
                             }
-                        } 
+                        }
                     }
 
                     if (toroidal == true)
@@ -376,7 +377,7 @@ namespace Game_of_Life
             int xLen = universe.GetLength(0);
             int yLen = universe.GetLength(1);                                               // Follows same format as above however resets to other side of screen
             for (int yOffset = -1; yOffset <= 1; yOffset++)                                 // if at edge instead of calling everything off screen dead
-            {                                                                               
+            {
                 for (int xOffset = -1; xOffset <= 1; xOffset++)
                 {
                     int xCheck = x + xOffset;
@@ -388,11 +389,11 @@ namespace Game_of_Life
                     }
                     if (xCheck < 0)
                     {
-                        xCheck = xLen -1;
+                        xCheck = xLen - 1;
                     }
                     if (yCheck < 0)
                     {
-                        yCheck = yLen -1;
+                        yCheck = yLen - 1;
                     }
                     if (xCheck >= xLen)
                     {
@@ -597,6 +598,55 @@ namespace Game_of_Life
         private void gridOnOffToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showGrid = !showGrid;
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "All Files|.|txt|*.txt";
+            dialog.FilterIndex = 2; dialog.DefaultExt = "txt";
+
+
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+                StreamWriter writer = new StreamWriter(dialog.FileName);
+
+                // Write any comments you want to include first.
+                // Prefix all comment strings with an exclamation point.
+                // Use WriteLine to write the strings to the file. 
+                // It appends a CRLF for you.
+                writer.WriteLine("!This is my comment.");
+
+                // Iterate through the universe one row at a time.
+                for (int y = 0; y < universe.GetLength(1); y++)
+                {
+                    // Create a string to represent the current row.
+                    String currentRow = string.Empty;
+                    // Iterate through the current row one cell at a time.
+                    for (int x = 0; x < universe.GetLength(0); x++)
+                    {
+                        // If the universe[x,y] is alive then append 'O' (capital O)
+                        // to the row string.
+                        if (universe[x, y] == true)
+                        {
+                            currentRow += "O";
+                        }
+                        // Else if the universe[x,y] is dead then append '.' (period)
+                        // to the row string.
+                        else if (universe[x, y] == false)
+                        {
+                            currentRow += ".";
+                        }
+                    }
+
+                    // Once the current row has been read through and the 
+                    // string constructed then write it to the file using WriteLine.
+                    writer.WriteLine(currentRow);
+                }
+
+                // After all rows and columns have been written then close the file.
+                writer.Close();
+            }
         }
     }
 }
