@@ -14,8 +14,10 @@ namespace Game_of_Life
     {
         // The universe array
         bool[,] universe = new bool[30, 30];
-
+        bool[,] scratchPad = new bool[30, 30];
+        bool showNums = true;
         bool toroidal = false;
+        bool showGrid = true;
 
         // Drawing colors
         Color gridColor = Color.Black;
@@ -23,16 +25,19 @@ namespace Game_of_Life
 
         // The Timer class
         Timer timer = new Timer();
-        int timerInterval = 100;
+        //int timerInterval = 100;
 
         // Generation count
         int generations = 0;
 
-        // Height / Width
-        int columns = 30;
-        int rows = 30;
+        int rows = 0;
+        int columns = 0;
 
-public Form1()
+        string toroidalCheck = "";
+        string displayLivingCells = "";
+        
+
+        public Form1()
         {
             InitializeComponent();
 
@@ -40,15 +45,13 @@ public Form1()
             BackColor = Properties.Settings.Default.PanelColor; // background color
             cellColor = Properties.Settings.Default.CellColor;  // cell color
             gridColor = Properties.Settings.Default.GridColor;  // grid color
-            timerInterval = Properties.Settings.Default.TimerInterval; // timer interval
+            timer.Interval = Properties.Settings.Default.TimerInterval; // timer interval
             columns = Properties.Settings.Default.Columns;
             rows = Properties.Settings.Default.Rows;
 
-            universe = new bool[columns,rows];
-
 
             // Setup the timer
-            timer.Interval = timerInterval; // milliseconds
+            timer.Interval = 100; // milliseconds
             timer.Tick += Timer_Tick;
             timer.Enabled = false; // start timer running
         }
@@ -56,18 +59,18 @@ public Form1()
         // Calculate the next generation of cells
         private void NextGeneration()
         {
-            bool[,] scratchPad = new bool[columns, rows];
+            
 
-            //string toroidalCheck = "";
+            displayLivingCells = livingCells().ToString();
 
-            //if (toroidal == true)
-            //{
-            //    toroidalCheck = "Toroidal mode";
-            //}
-            //else if (toroidal == false)
-            //{
-            //    toroidalCheck = "Finite mode";
-            //}
+            if (toroidal == true)
+            {
+                toroidalCheck = "Toroidal mode";
+            }
+            else if (toroidal == false)
+            {
+                toroidalCheck = "Finite mode";
+            }
 
             if (toroidal == true)
             {
@@ -99,6 +102,10 @@ public Form1()
                         else if (count == 0 && neighbors == 3)
                         {
                             scratchPad[x, y] = true;
+                        }
+                        else if (count == 0 && neighbors != 3)
+                        {
+                            scratchPad[x, y] = false;
                         }
                     }
                 } 
@@ -134,6 +141,10 @@ public Form1()
                         {
                             scratchPad[x, y] = true;
                         }
+                        else if (count == 0 && neighbors != 3)
+                        {
+                            scratchPad[x, y] = false;
+                        }
                     }
                 }
             }
@@ -143,19 +154,11 @@ public Form1()
             universe = scratchPad;
             scratchPad = temp;
 
-            for (int y = 0; y < scratchPad.GetLength(1); y++)
-            {
-                for (int x = 0; x < scratchPad.GetLength(0); x++)
-                {
-                    scratchPad[x, y] = false;
-                }
-            }
-
             // Increment generation count
             generations++;
 
             // Update status strip generations
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString()/* + " " + toroidalCheck*/;
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString() + " Number of Living Cells: " + displayLivingCells + " " + toroidalCheck;
 
             graphicsPanel1.Invalidate();
         }
@@ -191,16 +194,68 @@ public Form1()
                     cellRect.X = x * cellWidth;
                     cellRect.Y = y * cellHeight;
                     cellRect.Width = cellWidth;
-                    cellRect.Height = cellHeight;
+                    cellRect.Height = cellHeight; 
+
+                    StringFormat format = new StringFormat();
+                    format.Alignment = StringAlignment.Center;
+                    format.LineAlignment = StringAlignment.Center;
+                    int numSize = cellHeight / 3;
+                    if (numSize < 1)
+                    {
+                        numSize = 1;
+                    }
+                    Font font = new Font(FontFamily.GenericSansSerif, numSize, FontStyle.Regular);
+
+                    int neighborCountFinite = CountNeighborsFinite(x, y);
+                    int neighborCountToroidal = CountNeighborsToroidal(x, y);
 
                     // Fill the cell with a brush if alive
-                    if (universe[x, y] == true)
+                    if (toroidal == false)
                     {
-                        e.Graphics.FillRectangle(cellBrush, cellRect);
+                        if (universe[x, y] == true)
+                        {
+                            e.Graphics.FillRectangle(cellBrush, cellRect);
+                            if (showNums == true)
+                            {
+                                e.Graphics.DrawString(neighborCountFinite.ToString(), font, Brushes.White, cellRect, format);
+                            }
+                        }
+                        else
+                        {
+                            if (showNums == true)
+                            {
+                                e.Graphics.DrawString(neighborCountFinite.ToString(), font, Brushes.White, cellRect, format);
+                            }
+                        } 
+                    }
+
+                    if (toroidal == true)
+                    {
+                        if (universe[x, y] == true)
+                        {
+                            e.Graphics.FillRectangle(cellBrush, cellRect);
+                            if (showNums == true)
+                            {
+                                e.Graphics.DrawString(neighborCountToroidal.ToString(), font, Brushes.White, cellRect, format);
+                                graphicsPanel1.Invalidate();
+                            }
+                        }
+                        else
+                        {
+                            if (showNums == true)
+                            {
+                                e.Graphics.DrawString(neighborCountToroidal.ToString(), font, Brushes.White, cellRect, format);
+                                graphicsPanel1.Invalidate();
+                            }
+                        }
                     }
 
                     // Outline the cell with a pen
-                    e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
+                    if (showGrid == true)
+                    {
+                        e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
+                        graphicsPanel1.Invalidate();
+                    }
                 }
             }
 
@@ -231,6 +286,25 @@ public Form1()
                 graphicsPanel1.Invalidate();
             }
         }
+
+        public int livingCells()
+        {
+            int numLivingCells = 0;
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+                    bool thisCell = universe[x, y];
+                    if (thisCell == true)
+                    {
+                        numLivingCells++;
+                    }
+                }
+            }
+
+            return numLivingCells;
+        }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Closes Game of Life
@@ -364,7 +438,7 @@ public Form1()
 
             timer.Enabled = false;
 
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString()/* + " " + toroidalCheck*/;
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString() + " Number of Living Cells: " + displayLivingCells + " " + toroidalCheck;
 
             graphicsPanel1.Invalidate();
         }
@@ -376,20 +450,13 @@ public Form1()
             timer.Enabled = false;
             generations = 0;
 
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString()/* + " " + toroidalCheck*/;
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString() + " Number of Living Cells: " + displayLivingCells + " " + toroidalCheck;
 
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
                     universe[x, y] = false;
-                }
-            }
-
-            for (int y = 0; y < universe.GetLength(1); y++)
-            {
-                for (int x = 0; x < universe.GetLength(0); x++)
-                {
                     universe[x, y] = rng.Next(2) == 1;
                 }
             }
@@ -409,20 +476,13 @@ public Form1()
                 timer.Enabled = false;
                 generations = 0;
 
-                toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString()/* + " " + toroidalCheck*/;
+                toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString() + " Number of Living Cells: " + displayLivingCells + " " + toroidalCheck;
 
                 for (int y = 0; y < universe.GetLength(1); y++)
                 {
                     for (int x = 0; x < universe.GetLength(0); x++)
                     {
                         universe[x, y] = false;
-                    }
-                }
-
-                for (int y = 0; y < universe.GetLength(1); y++)
-                {
-                    for (int x = 0; x < universe.GetLength(0); x++)
-                    {
                         universe[x, y] = rng.Next(2) == 1;
                     }
                 }
@@ -478,7 +538,7 @@ public Form1()
             Properties.Settings.Default.PanelColor = graphicsPanel1.BackColor;  // updates background color on exit
             Properties.Settings.Default.CellColor = cellColor;                  // updates cell color on exit
             Properties.Settings.Default.GridColor = gridColor;                  // updates grid color on exit
-            Properties.Settings.Default.TimerInterval = timerInterval;
+            Properties.Settings.Default.TimerInterval = timer.Interval;
             Properties.Settings.Default.Rows = rows;
             Properties.Settings.Default.Columns = columns;
 
@@ -492,24 +552,38 @@ public Form1()
             BackColor = Properties.Settings.Default.PanelColor; // background color
             cellColor = Properties.Settings.Default.CellColor;  // cell color
             gridColor = Properties.Settings.Default.GridColor;  // grid color
+            rows = Properties.Settings.Default.Rows;
+            columns = Properties.Settings.Default.Columns;
+            timer.Interval = Properties.Settings.Default.TimerInterval;
         }
 
         private void sizeAndTimeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SettingsModal dialog = new SettingsModal();
 
-            dialog.SetTimerInterval(timerInterval);
-            dialog.SetRows(rows);
-            dialog.SetColums(columns);
+            dialog.Timer = timer.Interval;
+            dialog.Rows = rows;
+            dialog.Columns = columns;
 
             if (DialogResult.OK == dialog.ShowDialog())
             {
-                timerInterval = dialog.GetTimerInterval();
-                rows = dialog.GetRows();
-                columns = dialog.GetColumns();
-
+                timer.Interval = dialog.Timer;
+                rows = dialog.Rows;
+                columns = dialog.Columns;
+                universe = new bool[columns, rows];
+                scratchPad = new bool[columns, rows];
                 graphicsPanel1.Invalidate();
             }
+        }
+
+        private void showNeighborCountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showNums = !showNums;
+        }
+
+        private void gridOnOffToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showGrid = !showGrid;
         }
     }
 }

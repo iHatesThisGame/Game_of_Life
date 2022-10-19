@@ -25,44 +25,14 @@ namespace Game_of_Life
 
         public int Rows
         {
-            get { return (int)numericUpDownTimer.Value; }
-            set { numericUpDownTimer.Value = value; }
+            get { return (int)numericUpDownRows.Value; }
+            set { numericUpDownRows.Value = value; }
         }
 
         public int Columns
         {
             get { return (int)numericUpDownColumns.Value; }
             set { numericUpDownColumns.Value = value; }
-        }
-
-        public int GetTimerInterval()
-        {
-            return (int)numericUpDownTimer.Value;
-        }
-
-        public void SetTimerInterval(int number)
-        {
-            numericUpDownTimer.Value = number;
-        }
-
-        public int GetRows()
-        {
-            return (int)numericUpDownRows.Value;
-        }
-
-        public void SetRows(int number)
-        {
-            numericUpDownRows.Value = number;
-        }
-
-        public int GetColumns()
-        {
-            return (int)numericUpDownColumns.Value;
-        }
-
-        public void SetColums(int number)
-        {
-            numericUpDownColumns.Value = number;
         }
     }
 }
