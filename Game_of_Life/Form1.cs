@@ -62,6 +62,7 @@ namespace Game_of_Life
             // reset universes after resizing
             universe = new bool[columns, rows];
             scratchPad = new bool[columns, rows];
+            HUD();
             graphicsPanel1.Invalidate();
         }
 
@@ -73,11 +74,11 @@ namespace Game_of_Life
 
             if (toroidal == true)
             {
-                toroidalCheck = "Toroidal mode";            // if toroidal check is true
+                toroidalCheck = "Toroidal";            // if toroidal check is true
             }
             else if (toroidal == false)
             {
-                toroidalCheck = "Finite mode";              //if toroidal check is false
+                toroidalCheck = "Finite";              //if toroidal check is false
             }
             // checks to see if toroidal check is true and then follows the toroidal ruleset
             if (toroidal == true)
@@ -175,7 +176,7 @@ namespace Game_of_Life
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
             toolStripStatusLabelLiveCells.Text = "Living Cells = " + displayLivingCells;
             toolStripStatusLabelMode.Text = "Mode: " + toroidalCheck;
-
+            HUD();
             graphicsPanel1.Invalidate();
         }
 
@@ -232,6 +233,7 @@ namespace Game_of_Life
                     int neighborCountToroidal = CountNeighborsToroidal(x, y);
 
                     // Fill the cell with a brush if alive
+                    // Shows number of neighbors for finit
                     if (toroidal == false)
                     {
                         if (universe[x, y] == true)
@@ -239,18 +241,18 @@ namespace Game_of_Life
                             e.Graphics.FillRectangle(cellBrush, cellRect);
                             if (showNums == true)
                             {
-                                e.Graphics.DrawString(neighborCountFinite.ToString(), font, Brushes.White, cellRect, format);
+                                e.Graphics.DrawString(neighborCountFinite.ToString(), font, Brushes.White, cellRect, format);   //displays number
                             }
                         }
                         else
                         {
                             if (showNums == true)
                             {
-                                e.Graphics.DrawString(neighborCountFinite.ToString(), font, Brushes.White, cellRect, format);
+                                e.Graphics.DrawString(neighborCountFinite.ToString(), font, Brushes.White, cellRect, format);   //displays number
                             }
                         }
                     }
-
+                    // Shows number of neighbors for toroidal 
                     if (toroidal == true)
                     {
                         if (universe[x, y] == true)
@@ -258,19 +260,19 @@ namespace Game_of_Life
                             e.Graphics.FillRectangle(cellBrush, cellRect);
                             if (showNums == true)
                             {
-                                e.Graphics.DrawString(neighborCountToroidal.ToString(), font, Brushes.White, cellRect, format);
+                                e.Graphics.DrawString(neighborCountToroidal.ToString(), font, Brushes.White, cellRect, format); //displays number
                             }
                         }
                         else
                         {
                             if (showNums == true)
                             {
-                                e.Graphics.DrawString(neighborCountToroidal.ToString(), font, Brushes.White, cellRect, format);
+                                e.Graphics.DrawString(neighborCountToroidal.ToString(), font, Brushes.White, cellRect, format); //displays number
                             }
                         }
                     }
 
-                    // Outline the cell with a pen
+                    // Outline the cell with a pen if showGrid is true
                     if (showGrid == true)
                     {
                         e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
@@ -308,15 +310,15 @@ namespace Game_of_Life
 
         public int livingCells()
         {
-            int numLivingCells = 0;
+            int numLivingCells = 0;     // count of cells alive
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
-                    bool thisCell = universe[x, y];
+                    bool thisCell = universe[x, y];     // checks if this cell is alive or dead
                     if (thisCell == true)
                     {
-                        numLivingCells++;
+                        numLivingCells++;               // for every living cell found, add one to our count
                     }
                 }
             }
@@ -412,7 +414,7 @@ namespace Game_of_Life
                         yCheck = 0;
                     }
 
-                    if (universe[xCheck, yCheck] == true)
+                    if (universe[xCheck, yCheck] == true)           // if this cell is alive, add to count 
                     {
                         count++;
                     }
@@ -457,9 +459,9 @@ namespace Game_of_Life
             timer.Enabled = false;
 
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
-            toolStripStatusLabelLiveCells.Text = "Living Cells = " + displayLivingCells;
+            toolStripStatusLabelLiveCells.Text = "Living Cells = " + displayLivingCells;        // displays everything to tool strip
             toolStripStatusLabelMode.Text = "Mode: " + toroidalCheck;
-
+            HUD();                                                                              // displays to HUD
             graphicsPanel1.Invalidate();
         }
 
@@ -467,19 +469,19 @@ namespace Game_of_Life
         {
             Random rng = new Random();
 
-            timer.Enabled = false;
+            timer.Enabled = false;          // resets timer and generations count to zero to force a restart
             generations = 0;
 
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
             toolStripStatusLabelLiveCells.Text = "Living Cells = " + displayLivingCells;
             toolStripStatusLabelMode.Text = "Mode: " + toroidalCheck;
-
+            HUD();
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
                     universe[x, y] = false;
-                    universe[x, y] = rng.Next(2) == 1;
+                    universe[x, y] = rng.Next(2) == 1;          // sets random true/false value for each cell
                 }
             }
             graphicsPanel1.Invalidate();
@@ -489,31 +491,31 @@ namespace Game_of_Life
         {
             NewSeedModal dialog = new NewSeedModal();
             int seed = 0;
-            dialog.SetSeed(seed);
+            dialog.SetSeed(seed);           // sets 'seed' with user input
 
-            Random rng = new Random(seed);
+            Random rng = new Random(seed);  // sets 'seed' as seed for random
 
             if (DialogResult.OK == dialog.ShowDialog())
             {
-                timer.Enabled = false;
+                timer.Enabled = false;                  // forced restart
                 generations = 0;
 
                 toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
                 toolStripStatusLabelLiveCells.Text = "Living Cells = " + displayLivingCells;
                 toolStripStatusLabelMode.Text = "Mode: " + toroidalCheck;
-
+                HUD();
                 for (int y = 0; y < universe.GetLength(1); y++)
                 {
                     for (int x = 0; x < universe.GetLength(0); x++)
                     {
                         universe[x, y] = false;
-                        universe[x, y] = rng.Next(2) == 1;
+                        universe[x, y] = rng.Next(2) == 1;          // sets random true/ false value from seed
                     }
                 }
                 graphicsPanel1.Invalidate();
             }
         }
-
+        // sets background color
         private void backgroundColor_Click(object sender, EventArgs e)
         {
             ColorDialog dialog = new ColorDialog();
@@ -524,7 +526,7 @@ namespace Game_of_Life
                 graphicsPanel1.Invalidate();
             }
         }
-
+        // sets cell color
         private void cellColor_Click(object sender, EventArgs e)
         {
             ColorDialog dialog = new ColorDialog();
@@ -535,7 +537,7 @@ namespace Game_of_Life
                 graphicsPanel1.Invalidate();
             }
         }
-
+        // sets grid color
         private void gridColor_Click(object sender, EventArgs e)
         {
             ColorDialog dialog = new ColorDialog();
@@ -546,14 +548,14 @@ namespace Game_of_Life
                 graphicsPanel1.Invalidate();
             }
         }
-
+        // sets toroidal mode
         private void toroidal_Click(object sender, EventArgs e)
         {
             toroidal = true;        // set mode to toroidal
             finiteToolStripMenuItem.Checked = false;
             toroidalToolStripMenuItem.Checked = true;
         }
-
+        // sets finite mode
         private void finite_Click(object sender, EventArgs e)
         {
             toroidal = false;       // set mode to finite
@@ -616,7 +618,7 @@ namespace Game_of_Life
                 timer.Interval = dialog.Timer;
                 rows = dialog.Rows;
                 columns = dialog.Columns;
-                universe = new bool[columns, rows];
+                universe = new bool[columns, rows];         // allows user to change aspects (time and size) of window
                 scratchPad = new bool[columns, rows];
                 graphicsPanel1.Invalidate();
             }
@@ -624,14 +626,14 @@ namespace Game_of_Life
 
         private void showNeighborCount_Click(object sender, EventArgs e)
         {
-            showNums = !showNums;
+            showNums = !showNums;               // toggles neighbor count display
             graphicsPanel1.Invalidate();
         }
 
         private void gridOnOff_Click(object sender, EventArgs e)
         {
             showGrid = !showGrid;
-            graphicsPanel1.Invalidate();
+            graphicsPanel1.Invalidate();        // toggles grid display
         }
 
         private void saveAs_Click(object sender, EventArgs e)
@@ -768,7 +770,7 @@ namespace Game_of_Life
                 }
             }
         }
-
+        // toggles HUD
         private void hudOnOff_Click(object sender, EventArgs e)
         {
             showHUD = !showHUD;
@@ -777,7 +779,7 @@ namespace Game_of_Life
                 hudMode.Visible = true;
                 hudWidth.Visible = true;
                 hudHeight.Visible = true;
-                hudCellCount.Visible = true;
+                hudCellCount.Visible = true;            // toggles respective HUD portion on
                 hudGenerations.Visible = true;
             }
             else
@@ -785,10 +787,19 @@ namespace Game_of_Life
                 hudMode.Visible = false;
                 hudWidth.Visible = false;
                 hudHeight.Visible = false;
-                hudCellCount.Visible = false;
+                hudCellCount.Visible = false;           // toggles respective HUD portion off
                 hudGenerations.Visible = false;
             }
             graphicsPanel1.Invalidate();
+        }
+        // HUD information
+        private void HUD()
+        {
+            hudMode.Text = "Mode: " + toroidalCheck;
+            hudWidth.Text = "Width = " + columns;
+            hudHeight.Text = "Height = " + rows;
+            hudCellCount.Text = "Cell Count = " + displayLivingCells;
+            hudGenerations.Text = "generations =" + generations;
         }
     }
 }
