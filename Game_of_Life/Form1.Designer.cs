@@ -107,7 +107,7 @@ namespace Game_of_Life
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(680, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(813, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -371,7 +371,7 @@ namespace Game_of_Life
             this.NextButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(680, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(813, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -446,9 +446,9 @@ namespace Game_of_Life
             this.toolStripStatusLabelGenerations,
             this.toolStripStatusLabelLiveCells,
             this.toolStripStatusLabelMode});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 530);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 643);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(680, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(813, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -544,7 +544,7 @@ namespace Game_of_Life
             this.graphicsPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.graphicsPanel1.Location = new System.Drawing.Point(0, 49);
             this.graphicsPanel1.Name = "graphicsPanel1";
-            this.graphicsPanel1.Size = new System.Drawing.Size(680, 481);
+            this.graphicsPanel1.Size = new System.Drawing.Size(813, 594);
             this.graphicsPanel1.TabIndex = 3;
             this.graphicsPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.graphicsPanel1_Paint);
             this.graphicsPanel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graphicsPanel1_MouseClick);
@@ -556,7 +556,7 @@ namespace Game_of_Life
             this.hudMode.CausesValidation = false;
             this.hudMode.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.hudMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hudMode.Location = new System.Drawing.Point(0, 381);
+            this.hudMode.Location = new System.Drawing.Point(0, 494);
             this.hudMode.Name = "hudMode";
             this.hudMode.Size = new System.Drawing.Size(108, 20);
             this.hudMode.TabIndex = 4;
@@ -569,7 +569,7 @@ namespace Game_of_Life
             this.hudWidth.CausesValidation = false;
             this.hudWidth.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.hudWidth.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hudWidth.Location = new System.Drawing.Point(0, 401);
+            this.hudWidth.Location = new System.Drawing.Point(0, 514);
             this.hudWidth.Name = "hudWidth";
             this.hudWidth.Size = new System.Drawing.Size(95, 20);
             this.hudWidth.TabIndex = 3;
@@ -582,7 +582,7 @@ namespace Game_of_Life
             this.hudHeight.CausesValidation = false;
             this.hudHeight.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.hudHeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hudHeight.Location = new System.Drawing.Point(0, 421);
+            this.hudHeight.Location = new System.Drawing.Point(0, 534);
             this.hudHeight.Name = "hudHeight";
             this.hudHeight.Size = new System.Drawing.Size(102, 20);
             this.hudHeight.TabIndex = 2;
@@ -595,7 +595,7 @@ namespace Game_of_Life
             this.hudCellCount.CausesValidation = false;
             this.hudCellCount.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.hudCellCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hudCellCount.Location = new System.Drawing.Point(0, 441);
+            this.hudCellCount.Location = new System.Drawing.Point(0, 554);
             this.hudCellCount.Name = "hudCellCount";
             this.hudCellCount.Size = new System.Drawing.Size(122, 20);
             this.hudCellCount.TabIndex = 1;
@@ -608,7 +608,7 @@ namespace Game_of_Life
             this.hudGenerations.CausesValidation = false;
             this.hudGenerations.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.hudGenerations.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hudGenerations.Location = new System.Drawing.Point(0, 461);
+            this.hudGenerations.Location = new System.Drawing.Point(0, 574);
             this.hudGenerations.Name = "hudGenerations";
             this.hudGenerations.Size = new System.Drawing.Size(138, 20);
             this.hudGenerations.TabIndex = 0;
@@ -618,7 +618,7 @@ namespace Game_of_Life
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(680, 552);
+            this.ClientSize = new System.Drawing.Size(813, 665);
             this.Controls.Add(this.graphicsPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
