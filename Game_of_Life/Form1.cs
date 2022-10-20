@@ -42,6 +42,11 @@ namespace Game_of_Life
         public Form1()
         {
             InitializeComponent();
+            // Setup the timer
+            timer.Interval = 100; // milliseconds
+            timer.Tick += Timer_Tick;
+            timer.Enabled = false; // start timer running
+
 
             // Set default settings
             BackColor = Properties.Settings.Default.PanelColor; // background color
@@ -51,11 +56,8 @@ namespace Game_of_Life
             columns = Properties.Settings.Default.Columns;      // width
             rows = Properties.Settings.Default.Rows;            // height
 
-
-            // Setup the timer
-            timer.Interval = 100; // milliseconds
-            timer.Tick += Timer_Tick;
-            timer.Enabled = false; // start timer running
+            universe = new bool[columns, rows];
+            scratchPad = new bool[columns, rows];
         }
 
         // Calculate the next generation of cells
@@ -173,9 +175,9 @@ namespace Game_of_Life
         {
             // Calculate the width and height of each cell in pixels
             // CELL WIDTH = WINDOW WIDTH / NUMBER OF CELLS IN X
-            int cellWidth = graphicsPanel1.ClientSize.Width / universe.GetLength(0);
+            float cellWidth = graphicsPanel1.ClientSize.Width / (float)universe.GetLength(0);
             // CELL HEIGHT = WINDOW HEIGHT / NUMBER OF CELLS IN Y
-            int cellHeight = graphicsPanel1.ClientSize.Height / universe.GetLength(1);
+            float cellHeight = graphicsPanel1.ClientSize.Height / (float)universe.GetLength(1);
 
             // A Pen for drawing the grid lines (color, width)
             Pen gridPen = new Pen(gridColor, 1);
@@ -195,7 +197,7 @@ namespace Game_of_Life
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
                     // A rectangle to represent each cell in pixels
-                    Rectangle cellRect = Rectangle.Empty;
+                    RectangleF cellRect = RectangleF.Empty;
                     cellRect.X = x * cellWidth;
                     cellRect.Y = y * cellHeight;
                     cellRect.Width = cellWidth;
@@ -205,7 +207,7 @@ namespace Game_of_Life
                     StringFormat format = new StringFormat();
                     format.Alignment = StringAlignment.Center;
                     format.LineAlignment = StringAlignment.Center;
-                    int numSize = cellHeight / 2;
+                    float numSize = cellHeight / 2;
                     if (numSize < 1)
                     {
                         numSize = 1;
@@ -273,14 +275,14 @@ namespace Game_of_Life
             if (e.Button == MouseButtons.Left)
             {
                 // Calculate the width and height of each cell in pixels
-                int cellWidth = graphicsPanel1.ClientSize.Width / universe.GetLength(0);
-                int cellHeight = graphicsPanel1.ClientSize.Height / universe.GetLength(1);
+                float cellWidth = graphicsPanel1.ClientSize.Width / (float)universe.GetLength(0);
+                float cellHeight = graphicsPanel1.ClientSize.Height / (float)universe.GetLength(1);
 
                 // Calculate the cell that was clicked in
                 // CELL X = MOUSE X / CELL WIDTH
-                int x = e.X / cellWidth;
+                int x = (int)(e.X / cellWidth);
                 // CELL Y = MOUSE Y / CELL HEIGHT
-                int y = e.Y / cellHeight;
+                int y = (int)(e.Y / cellHeight);
 
                 // Toggle the cell's state
                 universe[x, y] = !universe[x, y];

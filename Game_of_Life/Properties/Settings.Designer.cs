@@ -106,5 +106,17 @@ namespace Game_of_Life.Properties {
                 this["NeighborFontColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Red")]
+        public global::System.Drawing.Color HUDColor {
+            get {
+                return ((global::System.Drawing.Color)(this["HUDColor"]));
+            }
+            set {
+                this["HUDColor"] = value;
+            }
+        }
     }
 }
