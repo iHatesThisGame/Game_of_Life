@@ -789,7 +789,6 @@ namespace Game_of_Life
                 hudGenerations.Visible = false;
             }
             graphicsPanel1.Invalidate();
-            graphicsPanel1.Invalidate();
         }
     }
 }
