@@ -625,7 +625,7 @@ namespace Game_of_Life
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Game of Life";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
