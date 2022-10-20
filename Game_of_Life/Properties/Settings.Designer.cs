@@ -25,7 +25,7 @@ namespace Game_of_Life.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("White")]
+        [global::System.Configuration.DefaultSettingValueAttribute("DarkViolet")]
         public global::System.Drawing.Color PanelColor {
             get {
                 return ((global::System.Drawing.Color)(this["PanelColor"]));
@@ -92,30 +92,6 @@ namespace Game_of_Life.Properties {
             }
             set {
                 this["Columns"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Black")]
-        public global::System.Drawing.Color NeighborFontColor {
-            get {
-                return ((global::System.Drawing.Color)(this["NeighborFontColor"]));
-            }
-            set {
-                this["NeighborFontColor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Red")]
-        public global::System.Drawing.Color HUDColor {
-            get {
-                return ((global::System.Drawing.Color)(this["HUDColor"]));
-            }
-            set {
-                this["HUDColor"] = value;
             }
         }
     }

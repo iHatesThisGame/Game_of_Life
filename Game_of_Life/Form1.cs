@@ -16,9 +16,12 @@ namespace Game_of_Life
         // The universe array
         bool[,] universe = new bool[30, 30];
         bool[,] scratchPad = new bool[30, 30];
+
+        // Settings to be toggled
         bool showNums = true;
         bool toroidal = false;
         bool showGrid = true;
+        bool showHUD = true;
 
         // Drawing colors
         Color gridColor = Color.Black;
@@ -49,40 +52,46 @@ namespace Game_of_Life
 
 
             // Set default settings
-            BackColor = Properties.Settings.Default.PanelColor; // background color
+            graphicsPanel1.BackColor = Properties.Settings.Default.PanelColor; // background color
             cellColor = Properties.Settings.Default.CellColor;  // cell color
             gridColor = Properties.Settings.Default.GridColor;  // grid color
             timer.Interval = Properties.Settings.Default.TimerInterval; // timer interval
             columns = Properties.Settings.Default.Columns;      // width
             rows = Properties.Settings.Default.Rows;            // height
 
+            // reset universes after resizing
             universe = new bool[columns, rows];
             scratchPad = new bool[columns, rows];
+            graphicsPanel1.Invalidate();
         }
 
         // Calculate the next generation of cells
         private void NextGeneration()
         {
+            // how many cells are alive currently
             displayLivingCells = livingCells().ToString();
 
             if (toroidal == true)
             {
-                toroidalCheck = "Toroidal mode";
+                toroidalCheck = "Toroidal mode";            // if toroidal check is true
             }
             else if (toroidal == false)
             {
-                toroidalCheck = "Finite mode";
+                toroidalCheck = "Finite mode";              //if toroidal check is false
             }
-
+            // checks to see if toroidal check is true and then follows the toroidal ruleset
             if (toroidal == true)
             {
                 for (int y = 0; y < universe.GetLength(1); y++)
                 {
                     for (int x = 0; x < universe.GetLength(0); x++)
                     {
+                        // counts neighboring cells and checks which are alive
                         int neighbors = CountNeighborsToroidal(x, y);
+                        // number of neighboring cells that are alive
                         int count;
 
+                        //checks to see if the cell is alive
                         if (universe[x, y] == true)
                         {
                             count = 1;
@@ -92,6 +101,7 @@ namespace Game_of_Life
                             count = 0;
                         }
 
+                        // rule set for if a cell will live into next generation
                         if (count == 1 && (neighbors < 2 || neighbors > 3))
                         {
                             scratchPad[x, y] = false;
@@ -112,6 +122,8 @@ namespace Game_of_Life
                     }
                 }
             }
+
+            // same set of rules, following the finite setting instead of toroidal
             else if (toroidal == false)
             {
                 for (int y = 0; y < universe.GetLength(1); y++)
@@ -160,7 +172,9 @@ namespace Game_of_Life
             generations++;
 
             // Update status strip generations
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString() + "Number of Living Cells: " + displayLivingCells + " " + toroidalCheck;
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            toolStripStatusLabelLiveCells.Text = "Living Cells = " + displayLivingCells;
+            toolStripStatusLabelMode.Text = "Mode: " + toroidalCheck;
 
             graphicsPanel1.Invalidate();
         }
@@ -290,11 +304,6 @@ namespace Game_of_Life
                 // Tell Windows you need to repaint
                 graphicsPanel1.Invalidate();
             }
-        }
-
-        public void HUD()
-        {
-
         }
 
         public int livingCells()
@@ -447,7 +456,9 @@ namespace Game_of_Life
 
             timer.Enabled = false;
 
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString() + " Number of Living Cells: " + displayLivingCells + " " + toroidalCheck;
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            toolStripStatusLabelLiveCells.Text = "Living Cells = " + displayLivingCells;
+            toolStripStatusLabelMode.Text = "Mode: " + toroidalCheck;
 
             graphicsPanel1.Invalidate();
         }
@@ -459,7 +470,9 @@ namespace Game_of_Life
             timer.Enabled = false;
             generations = 0;
 
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString() + " Number of Living Cells: " + displayLivingCells + " " + toroidalCheck;
+            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            toolStripStatusLabelLiveCells.Text = "Living Cells = " + displayLivingCells;
+            toolStripStatusLabelMode.Text = "Mode: " + toroidalCheck;
 
             for (int y = 0; y < universe.GetLength(1); y++)
             {
@@ -485,7 +498,9 @@ namespace Game_of_Life
                 timer.Enabled = false;
                 generations = 0;
 
-                toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString() + " Number of Living Cells: " + displayLivingCells + " " + toroidalCheck;
+                toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+                toolStripStatusLabelLiveCells.Text = "Living Cells = " + displayLivingCells;
+                toolStripStatusLabelMode.Text = "Mode: " + toroidalCheck;
 
                 for (int y = 0; y < universe.GetLength(1); y++)
                 {
@@ -562,12 +577,30 @@ namespace Game_of_Life
         {
             Properties.Settings.Default.Reset();
 
-            BackColor = Properties.Settings.Default.PanelColor; // background color
+            graphicsPanel1.BackColor = Properties.Settings.Default.PanelColor; // background color
             cellColor = Properties.Settings.Default.CellColor;  // cell color
             gridColor = Properties.Settings.Default.GridColor;  // grid color
             rows = Properties.Settings.Default.Rows;            // height
             columns = Properties.Settings.Default.Columns;      // width
             timer.Interval = Properties.Settings.Default.TimerInterval; // timer speed
+
+            universe = new bool[columns, rows];
+            scratchPad = new bool[columns, rows];
+            graphicsPanel1.Invalidate();
+        }
+        private void reload_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Reload();
+            graphicsPanel1.BackColor = Properties.Settings.Default.PanelColor; // background color
+            cellColor = Properties.Settings.Default.CellColor;  // cell color
+            gridColor = Properties.Settings.Default.GridColor;  // grid color
+            rows = Properties.Settings.Default.Rows;            // height
+            columns = Properties.Settings.Default.Columns;      // width
+            timer.Interval = Properties.Settings.Default.TimerInterval; // timer speed
+
+            universe = new bool[columns, rows];
+            scratchPad = new bool[columns, rows];
+            graphicsPanel1.Invalidate();
         }
 
         private void sizeAndTime_Click(object sender, EventArgs e)
@@ -592,18 +625,20 @@ namespace Game_of_Life
         private void showNeighborCount_Click(object sender, EventArgs e)
         {
             showNums = !showNums;
+            graphicsPanel1.Invalidate();
         }
 
         private void gridOnOff_Click(object sender, EventArgs e)
         {
             showGrid = !showGrid;
+            graphicsPanel1.Invalidate();
         }
 
         private void saveAs_Click(object sender, EventArgs e)
         {
             SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = "All Files|.|txt|*.txt";
-            dialog.FilterIndex = 2; dialog.DefaultExt = "txt";
+            dialog.Filter = "All Files|*.*|Cells|*.cells";
+            dialog.FilterIndex = 2; dialog.DefaultExt = "cells";
 
 
             if (DialogResult.OK == dialog.ShowDialog())
@@ -645,6 +680,92 @@ namespace Game_of_Life
 
                 // After all rows and columns have been written then close the file.
                 writer.Close();
+            }
+        }
+
+        private void open_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "All Files|.|Cells|*.cells";
+            dialog.FilterIndex = 2;
+
+            if (DialogResult.OK == dialog.ShowDialog())
+            {
+                StreamReader reader = new StreamReader(dialog.FileName);
+
+                // Create a couple variables to calculate the width and height
+                // of the data in the file.
+                int maxWidth = 0;
+                int maxHeight = 0;
+
+                // Iterate through the file once to get its size.
+                while (!reader.EndOfStream)
+                {
+                    // Read one row at a time.
+                    string row = reader.ReadLine();
+
+                    // If the row begins with '!' then it is a comment
+                    // and should be ignored.
+                    if (row.StartsWith("!"))
+                    {
+                        continue;
+                    }
+                    // If the row is not a comment then it is a row of cells.
+                    // Increment the maxHeight variable for each row read.
+                    else
+                    {
+                        maxHeight++;
+                    }
+                    // Get the length of the current row string
+                    // and adjust the maxWidth variable if necessary.
+                    maxWidth = row.Length;
+                }
+                // Resize the current universe and scratchPad
+                // to the width and height of the file calculated above.
+                universe = new bool[maxWidth, maxHeight];
+                scratchPad = new bool[maxWidth, maxHeight];
+
+                // Reset the file pointer back to the beginning of the file.
+                reader.BaseStream.Seek(0, SeekOrigin.Begin);
+
+                // yPos variable
+                int yPos = 0;
+
+                // Iterate through the file again, this time reading in the cells.
+                while (!reader.EndOfStream)
+                {
+                    // Read one row at a time.
+                    string row = reader.ReadLine();
+
+                    // If the row begins with '!' then
+                    // it is a comment and should be ignored.
+                    if (row.StartsWith("!"))
+                    {
+                        continue;
+                    }
+                    // If the row is not a comment then 
+                    // it is a row of cells and needs to be iterated through.
+
+
+
+
+                    for (int xPos = 0; xPos < row.Length; xPos++)
+                    {
+                        // If row[xPos] is a 'O' (capital O) then
+                        // set the corresponding cell in the universe to alive.
+                        if (row[xPos] == 'O')
+                        {
+                            universe[xPos, yPos] = true;
+                        }
+                        // If row[xPos] is a '.' (period) then
+                        // set the corresponding cell in the universe to dead.
+                        if (row[xPos] == '.')
+                        {
+                            universe[xPos, yPos] = false;
+                        }
+                    }
+                    yPos++;
+                }
             }
         }
     }

@@ -34,7 +34,7 @@ namespace Game_of_Life
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.open = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -49,6 +49,7 @@ namespace Game_of_Life
             this.finiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reload = new System.Windows.Forms.ToolStripMenuItem();
             this.sizeAndTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showNeighborCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,6 +74,8 @@ namespace Game_of_Life
             this.NextButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelGenerations = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelLiveCells = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelMode = new System.Windows.Forms.ToolStripStatusLabel();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.colorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundColorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,10 +85,16 @@ namespace Game_of_Life
             this.toroidalToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.finiteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.graphicsPanel1 = new Game_of_Life.GraphicsPanel();
+            this.hudGenerations = new System.Windows.Forms.Label();
+            this.hudCellCount = new System.Windows.Forms.Label();
+            this.hudHeight = new System.Windows.Forms.Label();
+            this.hudWidth = new System.Windows.Forms.Label();
+            this.hudMode = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.graphicsPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -98,7 +107,7 @@ namespace Game_of_Life
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(573, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(680, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -106,7 +115,7 @@ namespace Game_of_Life
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem,
-            this.openToolStripMenuItem,
+            this.open,
             this.toolStripSeparator,
             this.saveAsToolStripMenuItem,
             this.toolStripSeparator1,
@@ -125,14 +134,15 @@ namespace Game_of_Life
             this.newToolStripMenuItem.Text = "&New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newRandomSeed_Click);
             // 
-            // openToolStripMenuItem
+            // open
             // 
-            this.openToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripMenuItem.Image")));
-            this.openToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.openToolStripMenuItem.Text = "&Open";
+            this.open.Image = ((System.Drawing.Image)(resources.GetObject("open.Image")));
+            this.open.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.open.Name = "open";
+            this.open.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.open.Size = new System.Drawing.Size(146, 22);
+            this.open.Text = "&Open";
+            this.open.Click += new System.EventHandler(this.open_Click);
             // 
             // toolStripSeparator
             // 
@@ -165,6 +175,7 @@ namespace Game_of_Life
             this.modeToolStripMenuItem,
             this.toolStripSeparator2,
             this.resetToolStripMenuItem,
+            this.reload,
             this.sizeAndTimeToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -177,7 +188,7 @@ namespace Game_of_Life
             this.cellColorToolStripMenuItem,
             this.gridColorToolStripMenuItem});
             this.customizeToolStripMenuItem.Name = "customizeToolStripMenuItem";
-            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.customizeToolStripMenuItem.Text = "&Customize";
             // 
             // backgroundColorToolStripMenuItem
@@ -207,7 +218,7 @@ namespace Game_of_Life
             this.toroidalToolStripMenuItem,
             this.finiteToolStripMenuItem});
             this.modeToolStripMenuItem.Name = "modeToolStripMenuItem";
-            this.modeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.modeToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.modeToolStripMenuItem.Text = "&Mode";
             // 
             // toroidalToolStripMenuItem
@@ -229,19 +240,27 @@ namespace Game_of_Life
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(143, 6);
             // 
             // resetToolStripMenuItem
             // 
             this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.resetToolStripMenuItem.Text = "&Reset";
             this.resetToolStripMenuItem.Click += new System.EventHandler(this.reset_Click);
+            // 
+            // reload
+            // 
+            this.reload.Name = "reload";
+            this.reload.Size = new System.Drawing.Size(146, 22);
+            this.reload.Text = "&Reload";
+            this.reload.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.reload.Click += new System.EventHandler(this.reload_Click);
             // 
             // sizeAndTimeToolStripMenuItem
             // 
             this.sizeAndTimeToolStripMenuItem.Name = "sizeAndTimeToolStripMenuItem";
-            this.sizeAndTimeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sizeAndTimeToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.sizeAndTimeToolStripMenuItem.Text = "&Size and Time";
             this.sizeAndTimeToolStripMenuItem.Click += new System.EventHandler(this.sizeAndTime_Click);
             // 
@@ -351,7 +370,7 @@ namespace Game_of_Life
             this.NextButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(573, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(680, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -373,6 +392,7 @@ namespace Game_of_Life
             this.openToolStripButton.Name = "openToolStripButton";
             this.openToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.openToolStripButton.Text = "&Open";
+            this.openToolStripButton.Click += new System.EventHandler(this.open_Click);
             // 
             // saveToolStripButton
             // 
@@ -422,10 +442,12 @@ namespace Game_of_Life
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabelGenerations});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 323);
+            this.toolStripStatusLabelGenerations,
+            this.toolStripStatusLabelLiveCells,
+            this.toolStripStatusLabelMode});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 530);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(573, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(680, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -434,6 +456,18 @@ namespace Game_of_Life
             this.toolStripStatusLabelGenerations.Name = "toolStripStatusLabelGenerations";
             this.toolStripStatusLabelGenerations.Size = new System.Drawing.Size(90, 17);
             this.toolStripStatusLabelGenerations.Text = "Generations = 0";
+            // 
+            // toolStripStatusLabelLiveCells
+            // 
+            this.toolStripStatusLabelLiveCells.Name = "toolStripStatusLabelLiveCells";
+            this.toolStripStatusLabelLiveCells.Size = new System.Drawing.Size(76, 17);
+            this.toolStripStatusLabelLiveCells.Text = "Live Cells = 0";
+            // 
+            // toolStripStatusLabelMode
+            // 
+            this.toolStripStatusLabelMode.Name = "toolStripStatusLabelMode";
+            this.toolStripStatusLabelMode.Size = new System.Drawing.Size(73, 17);
+            this.toolStripStatusLabelMode.Text = "Mode: Finite";
             // 
             // contextMenuStrip1
             // 
@@ -501,19 +535,89 @@ namespace Game_of_Life
             // 
             this.graphicsPanel1.BackColor = System.Drawing.SystemColors.Window;
             this.graphicsPanel1.ContextMenuStrip = this.contextMenuStrip1;
+            this.graphicsPanel1.Controls.Add(this.hudMode);
+            this.graphicsPanel1.Controls.Add(this.hudWidth);
+            this.graphicsPanel1.Controls.Add(this.hudHeight);
+            this.graphicsPanel1.Controls.Add(this.hudCellCount);
+            this.graphicsPanel1.Controls.Add(this.hudGenerations);
             this.graphicsPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.graphicsPanel1.Location = new System.Drawing.Point(0, 49);
             this.graphicsPanel1.Name = "graphicsPanel1";
-            this.graphicsPanel1.Size = new System.Drawing.Size(573, 274);
+            this.graphicsPanel1.Size = new System.Drawing.Size(680, 481);
             this.graphicsPanel1.TabIndex = 3;
             this.graphicsPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.graphicsPanel1_Paint);
             this.graphicsPanel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graphicsPanel1_MouseClick);
+            // 
+            // hudGenerations
+            // 
+            this.hudGenerations.AutoSize = true;
+            this.hudGenerations.BackColor = System.Drawing.Color.Transparent;
+            this.hudGenerations.CausesValidation = false;
+            this.hudGenerations.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.hudGenerations.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hudGenerations.Location = new System.Drawing.Point(0, 461);
+            this.hudGenerations.Name = "hudGenerations";
+            this.hudGenerations.Size = new System.Drawing.Size(138, 20);
+            this.hudGenerations.TabIndex = 0;
+            this.hudGenerations.Text = "Generations = 0";
+            // 
+            // hudCellCount
+            // 
+            this.hudCellCount.AutoSize = true;
+            this.hudCellCount.BackColor = System.Drawing.Color.Transparent;
+            this.hudCellCount.CausesValidation = false;
+            this.hudCellCount.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.hudCellCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hudCellCount.Location = new System.Drawing.Point(0, 441);
+            this.hudCellCount.Name = "hudCellCount";
+            this.hudCellCount.Size = new System.Drawing.Size(122, 20);
+            this.hudCellCount.TabIndex = 1;
+            this.hudCellCount.Text = "Cell Count = 0";
+            // 
+            // hudHeight
+            // 
+            this.hudHeight.AutoSize = true;
+            this.hudHeight.BackColor = System.Drawing.Color.Transparent;
+            this.hudHeight.CausesValidation = false;
+            this.hudHeight.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.hudHeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hudHeight.Location = new System.Drawing.Point(0, 421);
+            this.hudHeight.Name = "hudHeight";
+            this.hudHeight.Size = new System.Drawing.Size(102, 20);
+            this.hudHeight.TabIndex = 2;
+            this.hudHeight.Text = "Height = 30";
+            // 
+            // hudWidth
+            // 
+            this.hudWidth.AutoSize = true;
+            this.hudWidth.BackColor = System.Drawing.Color.Transparent;
+            this.hudWidth.CausesValidation = false;
+            this.hudWidth.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.hudWidth.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hudWidth.Location = new System.Drawing.Point(0, 401);
+            this.hudWidth.Name = "hudWidth";
+            this.hudWidth.Size = new System.Drawing.Size(95, 20);
+            this.hudWidth.TabIndex = 3;
+            this.hudWidth.Text = "Width = 30";
+            // 
+            // hudMode
+            // 
+            this.hudMode.AutoSize = true;
+            this.hudMode.BackColor = System.Drawing.Color.Transparent;
+            this.hudMode.CausesValidation = false;
+            this.hudMode.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.hudMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.hudMode.Location = new System.Drawing.Point(0, 381);
+            this.hudMode.Name = "hudMode";
+            this.hudMode.Size = new System.Drawing.Size(108, 20);
+            this.hudMode.TabIndex = 4;
+            this.hudMode.Text = "Mode: Finite";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(573, 345);
+            this.ClientSize = new System.Drawing.Size(680, 552);
             this.Controls.Add(this.graphicsPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
@@ -529,6 +633,8 @@ namespace Game_of_Life
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
+            this.graphicsPanel1.ResumeLayout(false);
+            this.graphicsPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -542,7 +648,7 @@ namespace Game_of_Life
         private GraphicsPanel graphicsPanel1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem open;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -587,6 +693,14 @@ namespace Game_of_Life
         private System.Windows.Forms.ToolStripMenuItem showNeighborCountToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gridOnOffToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hUDOnOffToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reload;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelLiveCells;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelMode;
+        private System.Windows.Forms.Label hudMode;
+        private System.Windows.Forms.Label hudWidth;
+        private System.Windows.Forms.Label hudHeight;
+        private System.Windows.Forms.Label hudCellCount;
+        private System.Windows.Forms.Label hudGenerations;
     }
 }
 
