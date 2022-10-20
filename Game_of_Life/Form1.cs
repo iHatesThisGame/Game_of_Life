@@ -768,5 +768,28 @@ namespace Game_of_Life
                 }
             }
         }
+
+        private void hudOnOff_Click(object sender, EventArgs e)
+        {
+            showHUD = !showHUD;
+            if (showHUD == true)
+            {
+                hudMode.Visible = true;
+                hudWidth.Visible = true;
+                hudHeight.Visible = true;
+                hudCellCount.Visible = true;
+                hudGenerations.Visible = true;
+            }
+            else
+            {
+                hudMode.Visible = false;
+                hudWidth.Visible = false;
+                hudHeight.Visible = false;
+                hudCellCount.Visible = false;
+                hudGenerations.Visible = false;
+            }
+            graphicsPanel1.Invalidate();
+            graphicsPanel1.Invalidate();
+        }
     }
 }
